@@ -1,0 +1,98 @@
+CREATE DATABASE IF NOT EXISTS db_restoran;
+USE db_restoran;
+
+CREATE TABLE meja (
+    idmeja INT AUTO_INCREMENT PRIMARY KEY,
+    nomormeja VARCHAR(10) NOT NULL,
+    kapasitas INT NOT NULL,
+    status ENUM('tersedia', 'terisi') DEFAULT 'tersedia'
+);
+
+CREATE TABLE menu (
+    idmenu INT AUTO_INCREMENT PRIMARY KEY,
+    namamenu VARCHAR(100) NOT NULL,
+    harga INT NOT NULL,
+    status_menu ENUM('tersedia', 'habis') DEFAULT 'tersedia'
+);
+
+CREATE TABLE users (
+    iduser INT AUTO_INCREMENT PRIMARY KEY,
+    namauser VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'waiter', 'kasir', 'owner') NOT NULL
+);
+
+CREATE TABLE pelanggan (
+    idpelanggan INT AUTO_INCREMENT PRIMARY KEY,
+    namapelanggan VARCHAR(100) NOT NULL,
+    jeniskelamin ENUM('L','P') NOT NULL,
+    nohp VARCHAR(15) NOT NULL,
+    alamat TEXT NOT NULL
+);
+
+CREATE TABLE pesanan (
+    idpesanan INT AUTO_INCREMENT PRIMARY KEY,
+    idpelanggan INT NOT NULL,
+    iduser INT NOT NULL,
+    idmeja INT NOT NULL,
+    tanggal DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status_pesanan ENUM('sudah_bayar', 'belum_bayar', 'batal') DEFAULT 'belum_bayar',
+    FOREIGN KEY (idpelanggan) REFERENCES pelanggan(idpelanggan) ON DELETE CASCADE,
+    FOREIGN KEY (iduser) REFERENCES users(iduser) ON DELETE CASCADE,
+    FOREIGN KEY (idmeja) REFERENCES meja(idmeja) ON DELETE CASCADE
+);
+
+CREATE TABLE detail_pesanan (
+    iddetail INT AUTO_INCREMENT PRIMARY KEY,
+    idpesanan INT NOT NULL,
+    idmenu INT NOT NULL,
+    jumlah INT NOT NULL,
+    subtotal INT NOT NULL,
+    FOREIGN KEY (idpesanan) REFERENCES pesanan(idpesanan) ON DELETE CASCADE,
+    FOREIGN KEY (idmenu) REFERENCES menu(idmenu) ON DELETE CASCADE
+);
+
+CREATE TABLE transaksi (
+    idtransaksi INT AUTO_INCREMENT PRIMARY KEY,
+    idpesanan INT NOT NULL,
+    iduser INT NOT NULL,
+    tanggal_transaksi DATETIME DEFAULT CURRENT_TIMESTAMP,
+    total INT NOT NULL,
+    bayar INT NOT NULL,
+    kembalian INT NOT NULL,
+    FOREIGN KEY (idpesanan) REFERENCES pesanan(idpesanan) ON DELETE CASCADE,
+    FOREIGN KEY (iduser) REFERENCES users(iduser) ON DELETE CASCADE
+);
+
+DELIMITER //
+
+CREATE PROCEDURE sp_proses_transaksi(
+    IN p_idpesanan INT,
+    IN p_iduser INT,
+    IN p_bayar INT
+)
+BEGIN
+    DECLARE v_total INT;
+    DECLARE v_kembalian INT;
+    
+    SELECT SUM(subtotal) INTO v_total FROM detail_pesanan WHERE idpesanan = p_idpesanan;
+    
+    IF p_bayar < v_total THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Uang pembayaran kurang dari total tagihan!'; 
+    ELSE 
+        SET v_kembalian = p_bayar - v_total;
+    
+        INSERT INTO transaksi (idpesanan, iduser, tanggal_transaksi, total, bayar, kembalian) 
+        VALUES (p_idpesanan, p_iduser, NOW(), v_total, p_bayar, v_kembalian);
+    
+        UPDATE pesanan SET status_pesanan = 'sudah_bayar' WHERE idpesanan = p_idpesanan;
+    
+        UPDATE meja m 
+        JOIN pesanan p ON m.idmeja = p.idmeja 
+        SET m.status = 'tersedia' 
+        WHERE p.idpesanan = p_idpesanan;
+    END IF;
+END //
+
+DELIMITER ;
