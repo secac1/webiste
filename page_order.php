@@ -30,7 +30,7 @@ if (in_array($action, ['edit', 'update'])) {
 }
 ?>
 <div class="card">
-    <h3><?= $edit ? 'Edit Pesanan #' . e($edit['idpesanan']) : 'Entri Pesanan' ?></h3>
+    <h3><?= $edit ? 'Edit Pesanan #' . e($edit['idpesanan']) : 'Entri Order / Pesanan' ?></h3>
     <?php if ($error): ?><div class="alert alert-danger">Gagal: <?= e($error); ?></div><?php endif; ?>
     <form method="POST" action="<?= $url ?>&action=<?= $edit ? 'update' : 'tambah' ?>" class="grid-2">
         <?php if ($edit): ?><input type="hidden" name="idpesanan" value="<?= e($edit['idpesanan']) ?>"><?php endif; ?>
@@ -64,9 +64,9 @@ if (in_array($action, ['edit', 'update'])) {
         <div class="form-group"><input type="number" name="jumlah" placeholder="Jumlah Porsi" min="1" value="<?= e($edit['jumlah'] ?? '') ?>" required></div>
         <?php if ($edit): ?>
             <div class="form-group"><button type="submit" class="btn btn-primary">Update Pesanan</button></div>
-            <div class="form-group"><a href="<?= $url ?>" class="btn btn-secondary" style="width: 100%; text-align: center; display: inline-block; box-sizing: border-box;">Batal Edit</a></div>
+            <div class="form-group"><a href="<?= $url ?>" class="btn btn-secondary">Batal Edit</a></div>
         <?php else: ?>
-            <div class="form-group"><button type="submit" class="btn btn-primary" style="width: 100%;">Buat Pesanan</button></div>
+            <div class="form-group"><button type="submit" class="btn btn-primary">Buat Pesanan</button></div>
         <?php endif; ?>
     </form>
 </div>

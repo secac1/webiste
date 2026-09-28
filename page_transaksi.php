@@ -14,7 +14,7 @@ if ($action == 'bayar' && $_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="card">
     <h3>Entri Transaksi Pembayaran</h3>
     <?php if ($error): ?><div class="alert alert-danger">Gagal: <?= e($error); ?></div><?php endif; ?>
-    <form method="POST" action="index.php?page=transaksi&action=bayar" class="grid-2">
+    <form method="POST" action="index.php?page=transaksi&action=bayar">
         <div class="form-group">
             <select name="idpesanan" required>
                 <option value="">Pilih Pesanan (Belum Bayar)</option>

@@ -1,137 +1,38 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-body {
-    background-color: whitesmoke;
-    color: darkslategray;
-}
-.container {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 20px;
-}
-.login-container {
-    max-width: 400px;
-    margin: 100px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 6px;
-    border: 1px solid silver;
-}
-h2, h3, h4 {
-    margin-bottom: 15px;
-    color: darkslategray;
-    text-align: center;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+body { background-color: whitesmoke; color: darkslategray; }
+.container, .login-container { max-width: 1000px; margin: 20px auto; padding: 20px; }
+.login-container { max-width: 400px; margin-top: 100px; }
+
+h2, h3 { margin-bottom: 15px; text-align: center; }
 h3 { text-align: left; }
 
-.form-group {
-    margin-bottom: 15px;
+.card, .login-container, .list-group-item, input, select, textarea, table, th, td {
+    background: white; border: 1px solid silver;
 }
+.card { padding: 20px; margin-bottom: 20px; }
+.form-group { margin-bottom: 15px; }
+label { display: block; margin-bottom: 5px; font-weight: bold; }
+input, select, textarea { width: 100%; padding: 10px; }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 14px;
-}
-input, select, textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid gray;
-    border-radius: 4px;
-    background: white;
-    color: black;
-}
 .btn {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
-    font-size: 12px;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
+    padding: 8px 12px; border: none; cursor: pointer; color: white; width: 100%;
+    font-weight: bold; text-decoration: none; display: inline-block; text-align: center;
 }
-.btn-primary { background-color: darkslategray; width: 100%; }
-.btn-success { background-color: seagreen; }
-.btn-danger { background-color: firebrick; }
-.btn-secondary { background-color: slategray; }
-.btn-aksi-container {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-}
-.btn-aksi {
-    width: auto !important;
-    padding: 6px 10px;
-    font-size: 11px;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    background: white;
-}
-table, th, td {
-    border: 1px solid silver;
-}
-th, td {
-    padding: 12px;
-    text-align: left;
-}
-th {
-    background-color: darkslategray;
-    color: white;
-}
-.navbar {
-    background-color: darkslategray;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-}
-.navbar-brand {
-    font-size: 18px;
-    font-weight: bold;
-}
-.alert {
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 4px;
-    text-align: center;
-}
-.alert-danger { background-color: mistyrose; color: firebrick; border: 1px solid firebrick; }
-.alert-info { background-color: aliceblue; color: darkslategray; border: 1px solid darkslategray; text-align: left; }
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 6px;
-    border: 1px solid silver;
-    margin-bottom: 20px;
-}
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-.list-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.list-group-item {
-    background: white;
-    padding: 15px;
-    border: 1px solid gray;
-    border-radius: 4px;
-    text-decoration: none;
-    color: darkslategray;
-    font-weight: bold;
-}
+.btn-primary { background: darkslategray; }
+.btn-aksi { width: auto; }
+.btn-success { background: seagreen; }
+.btn-danger { background: firebrick; }
+.btn-secondary { background: slategray; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+th, td { padding: 12px; text-align: left; }
+th { background: darkslategray; color: white; }
+
+.navbar { background: darkslategray; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+.navbar-brand { font-weight: bold; }
+
+.alert { padding: 12px; margin-bottom: 15px; text-align: center; }
+.alert-danger { background: mistyrose; color: firebrick; }
+.alert-info { background: aliceblue; text-align: left; }
+
+.list-group-item { display: block; padding: 15px; margin-bottom: 10px; text-decoration: none; color: darkslategray; font-weight: bold; }

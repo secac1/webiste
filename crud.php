@@ -29,7 +29,7 @@ $kolom['Status'] = $st;
                 </select>
             </div>
             <div class="form-group"><button type="submit" class="btn btn-primary">Update</button></div>
-            <div class="form-group"><a href="<?= $url ?>" class="btn btn-secondary" style="width: 100%;">Batal</a></div>
+            <div class="form-group"><a href="<?= $url ?>" class="btn btn-secondary">Batal</a></div>
         <?php else: ?>
             <div class="form-group"><button type="submit" class="btn btn-success">Simpan <?= ucfirst($noun) ?></button></div>
         <?php endif; ?>
